@@ -38,3 +38,28 @@ WHERE EXISTS (
     AND t1.user_id <> t2.user_id -- Exclude the current row itself
 );
 
+
+-- Query 2:
+
+-- Display only the details of Employees who either earn the highest and lowest BaseRate
+-- in each Department from the Employees table.
+
+-- CTE METHOD
+
+WITH MinBaseRate AS (
+    SELECT DepartmentName, MIN(BaseRate) AS Min_BaseRate
+    FROM [AdventureWorksDW2022].[dbo].[DimEmployee]
+    GROUP BY DepartmentName
+),
+MaxBaseRate AS (
+    SELECT DepartmentName, MAX(BaseRate) AS Max_BaseRate
+    FROM [AdventureWorksDW2022].[dbo].[DimEmployee]
+    GROUP BY DepartmentName
+)
+SELECT e.DepartmentName, 
+       m.Min_BaseRate, 
+       x.Max_BaseRate
+      -- m.employeekey
+FROM (SELECT DISTINCT DepartmentName FROM [AdventureWorksDW2022].[dbo].[DimEmployee]) e
+JOIN MinBaseRate m ON e.DepartmentName = m.DepartmentName
+JOIN MaxBaseRate x ON e.DepartmentName = x.DepartmentName;
