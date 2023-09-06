@@ -40,7 +40,7 @@ WHERE EXISTS (
 
 
 -- Query 2:
-
+-- Using AdventureWorksDW2022
 -- Display only the details of Employees who either earn the highest and lowest BaseRate
 -- in each Department from the Employees table.
 
@@ -57,9 +57,9 @@ MaxBaseRate AS (
     GROUP BY DepartmentName
 )
 SELECT e.DepartmentName, 
-       m.Min_BaseRate, 
-       x.Max_BaseRate
+       mn.Min_BaseRate, 
+       mx.Max_BaseRate
       -- m.employeekey
 FROM (SELECT DISTINCT DepartmentName FROM [AdventureWorksDW2022].[dbo].[DimEmployee]) e
-JOIN MinBaseRate m ON e.DepartmentName = m.DepartmentName
-JOIN MaxBaseRate x ON e.DepartmentName = x.DepartmentName;
+JOIN MinBaseRate mn ON e.DepartmentName = mn.DepartmentName
+JOIN MaxBaseRate mx ON e.DepartmentName = mx.DepartmentName;
