@@ -1,7 +1,6 @@
 -- Query 1:
-
---Finding duplicates in a table.
-
+--Created my own table
+--Find duplicates in the table.
 --DROP TABLE users;
 CREATE TABLE users
 (
@@ -38,7 +37,7 @@ WHERE EXISTS (
     AND t1.user_id <> t2.user_id -- Exclude the current row itself
 );
 
-
+-----------------------------------------------------------------------------------------------
 -- Query 2:
 -- Using AdventureWorksDW2022
 -- Display only the details of Employees who either earn the highest and lowest BaseRate
@@ -62,14 +61,12 @@ FROM (SELECT DISTINCT DepartmentName FROM [AdventureWorksDW2022].[dbo].[DimEmplo
 JOIN MinBaseRate mn ON e.DepartmentName = mn.DepartmentName
 JOIN MaxBaseRate mx ON e.DepartmentName = mx.DepartmentName;
 
+------------------------------------------------------------------------------------------------------------------------
 -- Query 3: Query all records showing the ProductKeys, unit price, CustomerKey and the Total Profit per Product
-
+-- Using AdventureWorksDW2022
 SELECT
     ProductKey,
     UnitPrice,
 	CustomerKey,
     SUM(SalesAmount - TotalProductCost) OVER (PARTITION BY b.ProductKey) AS TotalProfit
 FROM [AdventureWorksDW2022].[dbo].[FactInternetSales];
-
-
-
