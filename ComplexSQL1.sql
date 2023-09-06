@@ -59,7 +59,6 @@ MaxBaseRate AS (
 SELECT e.DepartmentName, 
        mn.Min_BaseRate, 
        mx.Max_BaseRate
-      -- m.employeekey
 FROM (SELECT DISTINCT DepartmentName FROM [AdventureWorksDW2022].[dbo].[DimEmployee]) e
 JOIN MinBaseRate mn ON e.DepartmentName = mn.DepartmentName
 JOIN MaxBaseRate mx ON e.DepartmentName = mx.DepartmentName;
