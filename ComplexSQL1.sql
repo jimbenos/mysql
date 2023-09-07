@@ -62,11 +62,27 @@ JOIN MinBaseRate mn ON e.DepartmentName = mn.DepartmentName
 JOIN MaxBaseRate mx ON e.DepartmentName = mx.DepartmentName;
 
 ------------------------------------------------------------------------------------------------------------------------
--- Query 3: Query all records showing the ProductKeys, unit price, CustomerKey and the Total Profit per Product
+-- Query 3:
 -- Using AdventureWorksDW2022
+-- Query all records showing the ProductKeys, unit price, CustomerKey and the Total Profit per Product
 SELECT
     ProductKey,
     UnitPrice,
 	CustomerKey,
-    SUM(SalesAmount - TotalProductCost) OVER (PARTITION BY b.ProductKey) AS TotalProfit
+    SUM(SalesAmount - TotalProductCost) OVER (PARTITION BY ProductKey) AS TotalProfit
 FROM [AdventureWorksDW2022].[dbo].[FactInternetSales];
+
+-- Outputs all rows from the table partitioned by ProductKey and showing the TotalProfit per Product
+-----------------------------------------------------------------------------------------------------------------------
+--Query 4: 
+-- Order the prospective buyers by their YearlyIncome
+-- Group it by the occupation
+-- Show average yearly income by occupation
+SELECT 
+	FirstName + LastName AS FullName,
+	Occupation, 
+	Education,
+	YearlyIncome,
+	ROW_NUMBER() OVER(PARTITION BY Occupation ORDER BY YearlyIncome DESC) AS RowNumber,
+	AVG(YearlyIncome) OVER(PARTITION BY Occupation) AS AvgYearlyIncome
+FROM [AdventureWorksDW2022].[dbo].[ProspectiveBuyer] 
