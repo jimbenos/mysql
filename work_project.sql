@@ -1,6 +1,6 @@
---truncate table [sqldb-iuih-research-sandbox].[dbo].[Deadly_fit_mums];
+--truncate table [sqldb-sandbox].[dbo].[rtable];
 
---insert into [sqldb-iuih-research-sandbox].[dbo].[Deadly_fit_mums]
+--insert into [sqldb-sandbox].[dbo].[rtable]
 select distinct
 --patient details
 	isnull(ptmg.[Primary Patient ID],fm.[Patient ID]) as [Patient ID]
@@ -88,7 +88,6 @@ select distinct
 --discharge to
 	,referredTo.[Referred To]
 
--- into [sqldb-iuih-research-sandbox].[dbo].[Deadly_fit_mums]
 -- form
 from [sqldb-iuih-dwh-prod].[raw_mmex].[PSA_Form] as fm
 
@@ -286,4 +285,3 @@ where
 	and fm.[RCURRENT] = 1
 	and refDetail.[Program Referred To] = 'Deadly Fit Mums'
 --	and pt.[Patient Test Patient] = 1
---	and fm.[Form ID] = 189828 
